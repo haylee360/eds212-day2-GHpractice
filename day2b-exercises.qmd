@@ -1,0 +1,84 @@
+---
+title: "Day2b Exercises"
+author: "Haylee Oyler"
+format: html
+editor: source
+editor_options: 
+  chunk_output_type: console
+---
+## Plotting equation 1
+
+```{r, message=FALSE}
+# load packages ----
+library(tidyverse)
+
+# define function ----
+eq1 <- function(x) {
+  3 * x^2 + 4
+}
+
+# create a data frame with range of values to evaluate our fxn across ----
+my_data_range <- data.frame (x = c(1,100))
+
+# plot fxn as continuous curve over our specified range of values in df ----
+ggplot(data = my_data_range, aes(x = x)) +
+  geom_function(fun = eq1)
+ 
+```
+
+## Plotting equation 2
+
+```{r}
+# define function
+eq2 <- function(x) {
+  2.4 - 5 * x^3 + 2.1 * x^2
+}
+
+# create data frame 
+data_range_2 <- data.frame(x = c(-50,50))
+
+# plot function over data range
+ggplot(data_range_2, aes(x = x)) +
+  geom_function(fun = eq2)
+
+#OR
+ggplot(data = data.frame(x = c(-50,50)), aes(x = x)) +
+  geom_function(fun = eq2)
+#this way is faster, no need to create extra objects
+```
+
+## Plotting derivatives
+
+```{r}
+# create function C(t) ----
+ct <- function(t) {
+  t^3
+}
+
+# Find deriv of C(t) ----
+dc_dt <- D(expr = expression(t^3), name = "t")
+dc_dt
+
+# store deriv as a function ----
+dc_dt_fun <- function(t) {
+  3 * t^2
+}
+
+# plot function over data range ----
+ggplot(data = data.frame(t = c(-5,5)), aes(x = t)) +
+  geom_function(fun = ct, color = "red") +
+  geom_function(fun = dc_dt_fun, color = "blue")
+
+```
+
+## Partial derivatives
+
+```{r}
+# create expression with multiple variables
+f_xyz <- expression(2 * x * y - 3 * x^2 * z^3)
+
+# partials wrt x ----
+df_dx <- D(f_xyz, name = "x")
+df_dx
+```
+
